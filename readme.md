@@ -80,6 +80,7 @@ Since the different thread is executed in an isolated instance of `v8`, you will
 
 ### Moving large amounts of data
 When you are passing data between isolates, the data is serialized and copied between threads (read more [here](https://github.com/laverdet/isolated-vm#class-externalcopy-transferable)). <br/>
-If you with to copy a large amount of data, you should use Typed Arrays (like `UInt8Array` or `Float64Array`) with a `SharedArrayBuffer` (if available) backend. <br/>
-In the above example we allocate a `w * h * c` sized shared buffer, and then use it as a backend for `Uint8Array`. We do all data manipulation using the `uint8` array and then return back the shared one. <br/>
+If you with to copy a large amount of data, you should use Typed Arrays (like `UInt8Array` or `Float64Array`) with a `SharedArrayBuffer` backend (if available). <br/>
+In the above example we allocate a `w * h * c` sized shared buffer, and then use it as a backend for `Uint8Array`. <br/>
+We do all data manipulation using the `uint8` array and then return back the shared one. <br/>
 Upon receiving the shared array from the thread, we reinterpret it into a `uint8` array and extract our data. <br/>
