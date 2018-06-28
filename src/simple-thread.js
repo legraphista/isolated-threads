@@ -1,5 +1,6 @@
-const { createIsolate, stringifyAndRun: run, bootstrapConsole } = require('./helpers');
+const { createIsolate, stringifyAndRun: run } = require('./helpers');
 const bootstrap = require('./bootstrap');
+const makeTransferable = require('./transferable');
 
 class Thread {
 
@@ -20,10 +21,13 @@ class Thread {
     this._context = context;
     this._jail = jail;
 
-    bootstrap({ jail, isolate, context: context });
+    bootstrap({ jail, isolate, context });
 
-    const script = isolate.compileScriptSync(`global.__runnable = ${run(contextFunction)}`);
-    script.runSync(context);
+    isolate.compileScriptSync(`global.__runnable = ${run(contextFunction)}`).runSync(context);
+    isolate.compileScriptSync(run(() => {
+      const original = global.__runnable;
+      global.__runnable = (...args) => global.__transferable(original(...args));
+    })).runSync(context);
 
     this.__runnable = jail.getSync('__runnable');
   }
@@ -33,7 +37,7 @@ class Thread {
    * @return {Promise<*>}
    */
   run(...args) {
-    return this.__runnable.apply(undefined, args);
+    return this.__runnable.apply(undefined, args.map(makeTransferable));
   }
 
 }

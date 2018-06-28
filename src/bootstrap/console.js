@@ -18,10 +18,10 @@ module.exports = ({ jail, isolate, context }) => {
     global.console = console;
 
     console.log = function (...args) {
-      log.applyIgnored(undefined, args.map(arg => new ivm.ExternalCopy(arg).copyInto()));
+      log.applySync(undefined, args.map(global.__transferable));
     };
     console.error = function (...args) {
-      error.applySync(undefined, args.map(arg => new ivm.ExternalCopy(arg).copyInto()));
+      error.applySync(undefined, args.map(global.__transferable));
     };
   })).runSync(context, {});
 };
