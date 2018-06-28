@@ -1,6 +1,6 @@
 const { createIsolate, stringifyAndRun: run } = require('./helpers');
-const bootstrap = require('./bootstrap');
-const makeTransferable = require('./transferable');
+const bootstrap = require('./helpers/bootstrap');
+const makeTransferable = require('./helpers/transferable');
 
 class Thread {
 

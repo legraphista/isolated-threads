@@ -1,5 +1,5 @@
 const ivm = require('isolated-vm');
-const { stringifyAndRun: run } = require('../helpers');
+const { stringifyAndRun: run } = require('../');
 
 module.exports = ({ jail, isolate, context }) => {
   jail.setSync('_log', new ivm.Reference(function (...args) {

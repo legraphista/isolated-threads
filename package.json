@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [],
   "author": "stefan@findie.me",
   "private": true,
@@ -13,5 +12,8 @@
   },
   "peerDependencies": {
     "isolated-vm": "^1.6.1"
+  },
+  "dependencies": {
+    "p-queue": "^2.4.2"
   }
 }

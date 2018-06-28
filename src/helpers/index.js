@@ -1,11 +1,11 @@
 const ivm = require('isolated-vm');
-const helpers = {};
+const index = {};
 
 /**
  * @param {function}fn
  * @return {string}
  */
-helpers.stringifyAndRun = (fn) => `(${fn.toString()})();`;
+index.stringifyAndRun = (fn) => `(${fn.toString()})();`;
 
 /**
  * @param {number} memoryLimit
@@ -16,7 +16,7 @@ helpers.stringifyAndRun = (fn) => `(${fn.toString()})();`;
  *  jail: Reference<Object>
  * }}
  */
-helpers.createIsolate = ({ memoryLimit, inspector } = {}) => {
+index.createIsolate = ({ memoryLimit, inspector } = {}) => {
   const isolate = new ivm.Isolate({ memoryLimit, inspector });
   const context = isolate.createContextSync();
   const jail = context.globalReference();
@@ -30,4 +30,4 @@ helpers.createIsolate = ({ memoryLimit, inspector } = {}) => {
   };
 };
 
-module.exports = helpers;
+module.exports = index;
