@@ -1,11 +1,11 @@
 {
   "name": "isolated-threads",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
-  "author": "stefan@findie.me",
+  "author": "Stefan-Gabriel Muscalu <stefan.gabriel.muscalu@gmail.com> (http://my.corneroftheinternet.rocks/)",
   "private": true,
   "devDependencies": {
     "isolated-vm": "^1.6.1"
