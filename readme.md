@@ -51,7 +51,7 @@ const t = new Thread(context);
 
 ### `new Thread(context, {memoryLimit})`
 - `context` [Function]
-    - Holds a context with constants and/or functions
+    - Holds a context with constants and/or functions required
     - Returns the function that will be called ar tuntime on a separate thread.
 - `options` [object]
     - `memoryLimit`: number - the maximum memory (in MB) at which to trigger an error and disposal (for more info see [here](https://github.com/laverdet/isolated-vm#new-ivmisolateoptions))
@@ -63,7 +63,7 @@ const t = new Thread(context);
 
 ### `new ThreadPool(context, poolSize, {memoryLimit})`
 - `context` [Function]
-    - Holds a context with constants and/or functions
+    - Holds a context with constants and/or functions required
     - Returns the function that will be called ar tuntime on a separate thread.
 - `poolSize` [number] - the number of threads to be spawned
 - `options` [object]
@@ -74,6 +74,12 @@ const t = new Thread(context);
 - Avilable schedulers as of now are only round-robin, more to come.
 
 ## A word about `Buffer`s and other `node` features
-Since the different thread is executed in an isolated instance of V8, you will not be able to use `Buffer` or `require` and you will not have access to any kind of event loop functions, like timeout or interval.
-When you are passing data between isolates, the data is serialized and copied between threads (read more [here](https://github.com/laverdet/isolated-vm#class-externalcopy-transferable)). If you with to copy a large amount of data, you should use Typed Arrays (like `UInt8Array` or `Float64Array`) with a `SharedArrayBuffer` (if available) backend.
-In the above example we allocate a `w * h * c` sized shared buffer, and then use it as a backend for `Uint8Array`. We do all data manipulation using the `uint8` array and then return back the shared one. Upon receiving the shared array from the thread, we reinterpret it to a `uint8` array and extract our data.
+
+### Limitations or running in a `v8` only isolate
+Since the different thread is executed in an isolated instance of `v8`, you will not be able to use `Buffer` or `require` and you will not have access to any kind of event loop functions, like `setTimeout` or `setInterval`.
+
+### Moving large amounts of data
+When you are passing data between isolates, the data is serialized and copied between threads (read more [here](https://github.com/laverdet/isolated-vm#class-externalcopy-transferable)). <br/>
+If you with to copy a large amount of data, you should use Typed Arrays (like `UInt8Array` or `Float64Array`) with a `SharedArrayBuffer` (if available) backend. <br/>
+In the above example we allocate a `w * h * c` sized shared buffer, and then use it as a backend for `Uint8Array`. We do all data manipulation using the `uint8` array and then return back the shared one. <br/>
+Upon receiving the shared array from the thread, we reinterpret it into a `uint8` array and extract our data. <br/>
