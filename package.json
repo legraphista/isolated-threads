@@ -1,0 +1,17 @@
+{
+  "name": "isolated-threads",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "stefan@findie.me",
+  "private": true,
+  "devDependencies": {
+    "isolated-vm": "^1.6.1"
+  },
+  "peerDependencies": {
+    "isolated-vm": "^1.6.1"
+  }
+}
