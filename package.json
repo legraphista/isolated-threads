@@ -1,12 +1,16 @@
 {
   "name": "isolated-threads",
   "version": "0.2.0",
-  "description": "",
+  "description": "JavaScript easy threads",
   "main": "index.js",
   "scripts": {},
-  "keywords": [],
+  "keywords": [
+    "thread",
+    "thread-pool",
+    "isolate"
+  ],
   "author": "Stefan-Gabriel Muscalu <stefan.gabriel.muscalu@gmail.com> (http://my.corneroftheinternet.rocks/)",
-  "private": true,
+  "license": "MIT",
   "devDependencies": {
     "isolated-vm": "^1.6.1"
   },
@@ -14,6 +18,13 @@
     "isolated-vm": "^1.6.1"
   },
   "dependencies": {
-    "p-queue": "^2.4.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/legraphista/isolated-threads.git"
+  },
+  "bugs": {
+    "url": "https://github.com/legraphista/isolated-threads/issues"
+  },
+  "homepage": "https://github.com/legraphista/isolated-threads#readme"
 }
