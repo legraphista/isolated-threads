@@ -39,8 +39,6 @@ class Thread {
 
       const __runnable = (...args) => transferable(original(...args));
 
-      console.log(typeof Object.defineProperty);
-
       Object.defineProperty(global, '__runnable', {
         value: __runnable,
         writable: false,

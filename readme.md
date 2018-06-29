@@ -1,9 +1,9 @@
 # Isolated Threads
-_Yes, javascript has easy threads too! Many thanks to [isolated-vm](https://github.com/laverdet/isolated-vm)!_
+_Yes, nodejs has real threads too! Many thanks to [isolated-vm](https://github.com/laverdet/isolated-vm)!_
 
 ## Getting Started
 
-### Instalation
+### Installation
 `npm i isolated-threads`
 
 ### Example
