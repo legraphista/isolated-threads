@@ -88,3 +88,15 @@ Upon receiving the shared array from the thread, we reinterpret it into a `uint8
 ## Debugging
 To debug other threads, constructor's `options` must contains `inspector` as a port number and optioally `filename` as a file name for the thread. If `filename` is not passed, then the `file:line` where the thread is spawned will be used.
 Upon spawning the thread, you will receive a connection URI in the `stderr` stream. Navigate to the URI using [Google Chrome](https://www.google.com/chrome/) or use it to configure your IDE of choice.
+
+## Caveats
+
+#### Passing functions
+As of now, you cannot pass function callback to the isolate. If requested, it can be added, but the callback function will run on the main thread, defeating the purposes of isolating threads.
+
+#### Mixing shared buffers in objects
+You cannot pass a shared buffer inside an object. You must pass it in a different argument.
+- `({sharedBuffer, w, h, c}) => sharedBuffer` will **not** work
+- `(sharedBuffer, {w, h, c}) => sharedBuffer` will work
+- `({a, b, c}) => ({sum: a+b+c})` will work
+- `(...args) => Math.max(...args)` will work
