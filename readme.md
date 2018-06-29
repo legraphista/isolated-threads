@@ -87,4 +87,4 @@ Upon receiving the shared array from the thread, we reinterpret it into a `uint8
 
 ## Debugging
 To debug other threads, constructor's `options` must contains `inspector` as a port number and optioally `filename` as a file name for the thread. If `filename` is not passed, then the `file:line` where the thread is spawned will be used.
-Upon spawning the thread, you will receive a connection URI in the `stderr` stream. Navigate to the URI using [Google Cheome](https://www.google.com/chrome/) or use it to configure your IDE of choice.
+Upon spawning the thread, you will receive a connection URI in the `stderr` stream. Navigate to the URI using [Google Chrome](https://www.google.com/chrome/) or use it to configure your IDE of choice.
