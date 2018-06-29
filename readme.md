@@ -84,3 +84,7 @@ If you with to copy a large amount of data, you should use Typed Arrays (like `U
 In the above example we allocate a `w * h * c` sized shared buffer, and then use it as a backend for `Uint8Array`. <br/>
 We do all data manipulation using the `uint8` array and then return back the shared one. <br/>
 Upon receiving the shared array from the thread, we reinterpret it into a `uint8` array and extract our data. <br/>
+
+## Debugging
+To debug other threads, constructor's `options` must contains `inspector` as a port number and optioally `filename` as a file name for the thread. If `filename` is not passed, then the `file:line` where the thread is spawned will be used.
+Upon spawning the thread, you will receive a connection URI in the `stderr` stream. Navigate to the URI using [Google Cheome](https://www.google.com/chrome/) or use it to configure your IDE of choice.
