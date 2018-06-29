@@ -1,6 +1,6 @@
 {
   "name": "isolated-threads",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "JavaScript easy threads",
   "main": "index.js",
   "scripts": {},
@@ -12,7 +12,8 @@
   "author": "Stefan-Gabriel Muscalu <stefan.gabriel.muscalu@gmail.com> (http://my.corneroftheinternet.rocks/)",
   "license": "MIT",
   "dependencies": {
-    "isolated-vm": "^1.6.1"
+    "isolated-vm": "^1.6.1",
+    "ws": "^5.2.1"
   },
   "repository": {
     "type": "git",

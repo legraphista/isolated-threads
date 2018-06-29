@@ -18,7 +18,7 @@ index.stringifyAndRun = (fn) => `(${fn.toString()})();`;
  */
 index.createIsolate = ({ memoryLimit, inspector } = {}) => {
   const isolate = new ivm.Isolate({ memoryLimit, inspector });
-  const context = isolate.createContextSync();
+  const context = isolate.createContextSync({ inspector });
   const jail = context.globalReference();
   jail.setSync('global', jail.derefInto());
   jail.setSync('ivm', ivm);
@@ -28,6 +28,16 @@ index.createIsolate = ({ memoryLimit, inspector } = {}) => {
     context,
     jail
   };
+};
+
+index.makeInspectorFileName = () => {
+  const stack = (new Error()).stack;
+  const lines = stack.split('\n');
+
+  const callerLine = lines[3];
+  const [/*match*/, /*caller*/, file, line, /*column*/] = /at (.*?) \((.*?)\:(\d+):(\d+)\)/.exec(callerLine);
+
+  return `${file}:${line}`;
 };
 
 module.exports = index;
