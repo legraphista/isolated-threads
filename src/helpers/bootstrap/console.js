@@ -10,18 +10,28 @@ module.exports = ({ jail, isolate, context }) => {
   }));
   isolate.compileScriptSync(run(function () {
     const log = global._log;
-    global._log = undefined;
+    delete global._log;
     const error = global._error;
-    global._error = undefined;
+    delete global._error;
 
     const console = {};
-    global.console = console;
+
+    Object.defineProperty(global, 'console', {
+      value: console,
+      writable: false,
+      enumerable: true,
+      configurable: false
+    });
+
+    const transferable = global.__transferable;
 
     console.log = function (...args) {
-      log.applySync(undefined, args.map(global.__transferable));
+      log.applySync(undefined, args.map(transferable));
     };
     console.error = function (...args) {
-      error.applySync(undefined, args.map(global.__transferable));
+      error.applySync(undefined, args.map(transferable));
     };
-  })).runSync(context, {});
+
+    Object.freeze(console);
+  }), { filename: '/thread/bootstrap/console.js' }).runSync(context, {});
 };

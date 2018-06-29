@@ -36,7 +36,17 @@ class Thread {
     isolate.compileScriptSync(run(() => {
       const original = global.__runnable;
       const transferable = global.__transferable;
-      global.__runnable = (...args) => transferable(original(...args));
+
+      const __runnable = (...args) => transferable(original(...args));
+
+      console.log(typeof Object.defineProperty);
+
+      Object.defineProperty(global, '__runnable', {
+        value: __runnable,
+        writable: false,
+        enumerable: false,
+        configurable: false
+      });
     }), { filename: '/thread/make-transferable.isolate.js' }).runSync(context);
 
     this.__runnable = jail.getSync('__runnable');

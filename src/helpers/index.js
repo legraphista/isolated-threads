@@ -21,7 +21,6 @@ index.createIsolate = ({ memoryLimit, inspector } = {}) => {
   const context = isolate.createContextSync({ inspector });
   const jail = context.globalReference();
   jail.setSync('global', jail.derefInto());
-  jail.setSync('ivm', ivm);
 
   return {
     isolate,

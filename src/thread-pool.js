@@ -18,7 +18,9 @@ class ThreadPool {
 
     if (inspector && !(inspector instanceof WebSocket.Server)) {
       inspector = new WebSocket.Server({ port: inspector });
+      this._wssOwner = true;
     }
+    this._wss = inspector;
 
     for (let i = 0; i < poolSize; i++) {
       this._pool[i] = new Thread(contextFunction, {
@@ -39,6 +41,14 @@ class ThreadPool {
     return this._pool[this._threadIndex].run(...args);
   }
 
+  dispose() {
+    for (let i = 0; i < this._poolSize; i++) {
+      this._pool[i].dispose();
+    }
+    if (this._wssOwner) {
+      this._wss.close();
+    }
+  }
 }
 
 module.exports = ThreadPool;
