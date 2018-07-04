@@ -41,11 +41,23 @@ const __makeTransferable = (element) => {
   element = __fixFunctions(element);
 
   if (element instanceof Object) {
-    return new ivm.ExternalCopy(element, { transferOut: true }).copyInto();
+    return new ivm.ExternalCopy(element);
   }
 
   throw new Error(`type ${typeof element} is not transferable`);
 };
 
+const __reverseTransferable = (element) => {
+  if (element instanceof ivm.ExternalCopy) {
+    const data = element.copy();
+    element.release();
+    return data;
+  }
+
+  return element;
+};
+
 __makeTransferable.__fixFunctions = __fixFunctions;
+__makeTransferable.__reverseTransferable = __reverseTransferable;
+
 module.exports = __makeTransferable;

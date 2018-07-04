@@ -36,8 +36,9 @@ class Thread {
     isolate.compileScriptSync(run(() => {
       const original = global.__runnable;
       const transferable = global.__transferable;
+      const reverseTransferable = global.__reverseTransferable;
 
-      const __runnable = (...args) => transferable(original(...args));
+      const __runnable = (...args) => transferable(original(...args.map(reverseTransferable)));
 
       Object.defineProperty(global, '__runnable', {
         value: __runnable,
@@ -97,8 +98,9 @@ class Thread {
    * @param {*} args
    * @return {Promise<*>}
    */
-  run(...args) {
-    return this.__runnable.apply(undefined, args.map(makeTransferable));
+  async run(...args) {
+    const externalResult = await this.__runnable.apply(undefined, args.map(makeTransferable));
+    return makeTransferable.__reverseTransferable(externalResult);
   }
 
   dispose() {

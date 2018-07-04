@@ -7,9 +7,16 @@ module.exports = ({ jail, isolate, context }) => {
     
       const __fixFunctions = ${transferable.__fixFunctions.toString()};
       const __transferable = ${transferable.toString()};
+      const __reverseTransferable = ${transferable.__reverseTransferable.toString()};
       
       Object.defineProperty(global, '__transferable', {
         value: __transferable,
+        writable: false,
+        enumerable: false,
+        configurable: false
+      });
+      Object.defineProperty(global, '__reverseTransferable', {
+        value: __reverseTransferable,
         writable: false,
         enumerable: false,
         configurable: false
