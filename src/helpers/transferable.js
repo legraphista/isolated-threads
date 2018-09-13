@@ -38,7 +38,7 @@ const __makeTransferable = (element) => {
     return element;
   }
 
-  element = __fixFunctions(element);
+  // element = __fixFunctions(element);
 
   if (element instanceof Object) {
     return new ivm.ExternalCopy(element);
