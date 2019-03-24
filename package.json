@@ -3,6 +3,7 @@
   "version": "0.5.1",
   "description": "JavaScript easy threads",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {},
   "keywords": [
     "thread",

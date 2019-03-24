@@ -6,7 +6,7 @@ _Yes, nodejs has real threads too! Many thanks to [isolated-vm](https://github.c
 ### Installation
 `npm i isolated-threads`
 
-### Example
+### Example JS
 ```js
 const { Thread, ThreadPool } = require('isolated-threads');
 
@@ -45,6 +45,53 @@ const t = new Thread(context);
 
   clearInterval(interval);
 })();
+```
+
+### Example TS
+```js
+import Thread = require("./src/thread");
+
+const context = () => {
+
+  const random = () => Math.round(Math.random() * 255);
+
+  return ({ w, h, c }: { w: number, h: number, c: number }): SharedArrayBuffer => {
+
+    const sharedArray = new SharedArrayBuffer(w * h * c);
+    const image = new Uint8Array(sharedArray);
+
+    console.log('generating noise image with params', { w, h, c });
+
+    const stride = w * c;
+
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        for (let k = 0; k < c; k++) {
+          image[y * stride + x * c + k] = random();
+        }
+      }
+    }
+
+    return sharedArray;
+  }
+};
+
+// inferred arguments and result from context 
+const t = new Thread(context);
+// or
+// enforce arguments and result to context
+const t = new Thread<[{ w: number, h: number, c: number }], SharedArrayBuffer>(context);
+
+(async () => {
+  const interval = setInterval(() => console.error('event loop'), 100);
+
+  const shared = await t.run({ w: 3840, h: 2160, c: 3 });
+  const image = new Uint8Array(shared);
+  console.log('image output buffer len', image.length);
+
+  clearInterval(interval);
+})();
+
 ```
 
 ## Class `Thread`
